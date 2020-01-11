@@ -1,7 +1,9 @@
-import React from 'react';
+import React from "react";
 import './App.css';
 import firebase from 'firebase';
 import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth';
+import video from './video.mp4';
+
 
 //initializing app
 firebase.initializeApp({
@@ -10,7 +12,10 @@ firebase.initializeApp({
 })
 
 class App extends React.Component {
-  state = { isSignedIn: false }
+  state = { 
+    isSignedIn: false, 
+    questionBank: []  
+  }
   uiConfig = {
     signInFlow: "popup",
     signInOptions: [
@@ -35,23 +40,31 @@ class App extends React.Component {
   render() {
     return (
       <div className="App">
-        {this.state.isSignedIn ? (
-          <span>
-            <div>Signed In!</div>
-            <h1>Welcome {firebase.auth().currentUser.displayName}!!</h1>
-            <button onClick={() => firebase.auth().signOut()}>Sign Out</button>
-            <img alt="Prof Pic" src={firebase.auth().currentUser.photoURL} />
-          </span>
-        ) : (
-            <StyledFirebaseAuth
-              uiConfig={this.uiConfig}
-              firebaseAuth={firebase.auth()}
-            />
-          )}
+        <video className='videoTag' autoPlay loop muted>
+          <source src={video} type='video/mp4' />
+        </video>
+        <div className="header-contents">
+          {this.state.isSignedIn ? (
+            <span >
+              <div>Signed In!</div>
+              <h1>Welcome {firebase.auth().currentUser.displayName}!!</h1>
+              
+
+
+              <button onClick={() => firebase.auth().signOut()}>Sign Out</button>
+              <img alt="Prof Pic" src={firebase.auth().currentUser.photoURL} />
+            </span>
+          ) : (
+              <StyledFirebaseAuth
+                uiConfig={this.uiConfig}
+                firebaseAuth={firebase.auth()}
+              />
+            )}
+        </div>
+
       </div>
     )
   }
 }
-
 
 export default App;
