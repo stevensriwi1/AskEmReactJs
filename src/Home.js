@@ -43,7 +43,7 @@ class Home extends Component {
             responses:0
         })
     }
-
+//rendering it
     render() {
         return (
             <div className="container">
